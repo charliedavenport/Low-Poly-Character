@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    public CameraController cam;
     public float BaseMoveSpeed = 1f;
     public float SprintMoveSpeed = 2f;
     public bool sprinting;
 
     private Animator anim;
     private Vector2 inputAxes;
+    private Vector3 locomotion;
     public float moveSpeed;
     private float speedPercent;
     private const float speedPercent_Max = 2f;
@@ -24,15 +26,17 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
+        // get player input
         inputAxes.x = Input.GetAxis("Horizontal");
         inputAxes.y = Input.GetAxis("Vertical");
-        sprinting = Input.GetKey(KeyCode.LeftShift);
+        // set moveSpeed and speedPercent floats 
+        sprinting = Input.GetKey(KeyCode.LeftShift) && (inputAxes.magnitude > 0);
         if (!sprinting)
         {
             speedPercent = Mathf.Lerp(speedPercent, Mathf.Clamp01(inputAxes.magnitude), 0.1f);
             moveSpeed = Mathf.Lerp(moveSpeed, BaseMoveSpeed, 0.3f);
         }
-        if (sprinting)
+        else
         {
             //speedPercent = Mathf.Clamp01(inputAxes.magnitude);
             speedPercent = Mathf.Lerp(speedPercent, 2 , 0.1f);
@@ -55,19 +59,6 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    IEnumerator doSprint()
-    {
-        for (float t=0; t<1; t += 0.1f)
-        {
-            speedPercent = Mathf.SmoothStep(speedPercent, speedPercent_Max, t);
-            anim.SetFloat("SpeedPercent", speedPercent);
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                break;
-            }
-            yield return new WaitForFixedUpdate();
-        }
-    }
 
 
 }
