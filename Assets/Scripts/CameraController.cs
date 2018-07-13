@@ -35,7 +35,7 @@ public class CameraController : MonoBehaviour {
         rotX = Mathf.Clamp(rotX, -30f, 30f);
 
         Quaternion cameraRot = Quaternion.Euler(rotX, rotY, 0f);
-        transform.rotation = cameraRot;
+        transform.rotation = Quaternion.Slerp(transform.rotation, cameraRot, 0.5f);
 
         lookDirection = Quaternion.Euler(0f, rotY, 0f);
     }

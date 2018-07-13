@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
             Vector3 lookAt = new Vector3(inputAxes.x, 0, inputAxes.y);
             lookAt = cam.lookDirection * lookAt;
             Debug.DrawRay(transform.position, lookAt);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAt, Vector3.up), 0.25f); // 0.25 = turn speed
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAt, Vector3.up), 0.1f); // 0.1 = turn speed
             Debug.DrawRay(transform.position + Vector3.up, transform.forward);
         }
     }
