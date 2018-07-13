@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public float moveSpeed = 5f;
+    public bool sprinting { get; private set; }
 
     private Animator anim;
     private Vector2 inputAxes;
@@ -13,13 +14,14 @@ public class PlayerController : MonoBehaviour {
     {
         anim = GetComponent<Animator>();
         inputAxes = Vector2.zero;
+        sprinting = false;
     }
 
     private void Update()
     {
         inputAxes.x = Input.GetAxis("Horizontal");
         inputAxes.y = Input.GetAxis("Vertical");
-        anim.SetFloat("SpeedPercent", inputAxes.magnitude);
+        anim.SetFloat("SpeedPercent",  Mathf.Clamp01(inputAxes.magnitude));
     }
 
     private void FixedUpdate()
