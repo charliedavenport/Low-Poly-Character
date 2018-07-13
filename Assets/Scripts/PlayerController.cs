@@ -51,10 +51,13 @@ public class PlayerController : MonoBehaviour {
     {
         if (inputAxes.magnitude > 0)
         {
-            transform.position += new Vector3(inputAxes.x * moveSpeed * Time.deltaTime, 0, inputAxes.y * moveSpeed * Time.deltaTime);
+            locomotion = new Vector3(inputAxes.x, 0, inputAxes.y) * moveSpeed * Time.deltaTime;
+            locomotion = cam.lookDirection * locomotion;
+            transform.position += locomotion;
             Vector3 lookAt = new Vector3(inputAxes.x, 0, inputAxes.y);
+            lookAt = cam.lookDirection * lookAt;
             Debug.DrawRay(transform.position, lookAt);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAt, Vector3.up), 0.25f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAt, Vector3.up), 0.25f); // 0.25 = turn speed
             Debug.DrawRay(transform.position + Vector3.up, transform.forward);
         }
     }

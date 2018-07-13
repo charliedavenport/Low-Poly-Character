@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour {
 
     public Transform target;
     public Camera mainCamera { get; private set; }
+    public Quaternion lookDirection { get; private set; }
     public float mouseSensitivity = 150f;
 
     private float mouseX;
@@ -31,10 +32,12 @@ public class CameraController : MonoBehaviour {
 
         rotY += mouseX * mouseSensitivity * Time.deltaTime;
         rotX += mouseY * mouseSensitivity * Time.deltaTime;
-        rotX = Mathf.Clamp(rotX, -80f, 80f);
+        rotX = Mathf.Clamp(rotX, -30f, 30f);
 
         Quaternion cameraRot = Quaternion.Euler(rotX, rotY, 0f);
         transform.rotation = cameraRot;
+
+        lookDirection = Quaternion.Euler(0f, rotY, 0f);
     }
 
 
