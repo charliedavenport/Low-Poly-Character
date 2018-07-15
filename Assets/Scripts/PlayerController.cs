@@ -29,8 +29,13 @@ public class PlayerController : MonoBehaviour {
         // get player input
         inputAxes.x = Input.GetAxis("Horizontal");
         inputAxes.y = Input.GetAxis("Vertical");
+
         // set moveSpeed and speedPercent floats 
         sprinting = Input.GetKey(KeyCode.LeftShift) && (inputAxes.magnitude > 0);
+        if (Input.GetKeyDown(KeyCode.Space) && !anim.GetCurrentAnimatorStateInfo(0).IsName("Roll")) 
+        {
+            anim.SetTrigger("RollTrigger");
+        }
         if (!sprinting)
         {
             speedPercent = Mathf.Lerp(speedPercent, Mathf.Clamp01(inputAxes.magnitude), 0.1f);
