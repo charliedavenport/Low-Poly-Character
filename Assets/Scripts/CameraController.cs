@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour {
     public Camera mainCamera { get; private set; }
     public Quaternion lookDirection { get; private set; }
     public float mouseSensitivity = 150f;
+    public float followSpeed = 0.4f;
 
     private float mouseX;
     private float mouseY;
@@ -22,7 +23,7 @@ public class CameraController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        transform.position = Vector3.Lerp(transform.position, target.position, 0.4f);
+        transform.position = Vector3.Lerp(transform.position, target.position, followSpeed);
     }
 
     private void LateUpdate()
